@@ -13,22 +13,27 @@ jobs:
         run: |
           echo "github.event.issue.pull_request is: "${{ github.event.issue.pull_request }}"
           echo "github.event.comment.body is: "${{ github.event.comment.body }}"
-          echo "github.event.comment.author_association is: "${{ github.event.comment.author_association }}"
 
   fast_forward_job:
     name: Fast Forward
     if: |
       (github.event.issue.pull_request != '') &&
-      github.event.comment.body == '/fast-forward' &&
-      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER')
+      github.event.comment.body == '/fast-forward'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions-cool/check-user-permission@v2
+        id: has_permission
+        with:
+          require: 'write'
+
       # To use this repository's private action, you must check out the repository
       - name: Checkout
+        if: steps.has_permission.outputs.check-result != 'false'
         uses: actions/checkout@v3
 
       # Basic use case example
       - name: Fast Forward PR
+        if: steps.has_permission.outputs.check-result != 'false'
         id: ff-action
         uses: endre-spotlab/fast-forward-js-action@2.1
         with:
