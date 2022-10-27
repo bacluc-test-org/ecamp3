@@ -5,6 +5,16 @@ on:
     types: [ created ]
 
 jobs:
+  show_used_fields:
+    name: Show used fields
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print fields
+        run: |
+          echo "github.event.issue.pull_request is: "${{ github.event.issue.pull_request }}"
+          echo "github.event.comment.body is: "${{ github.event.comment.body }}"
+          echo "github.event.comment.author_association is: "${{ github.event.comment.author_association }}"
+
   fast_forward_job:
     name: Fast Forward
     if: |
