@@ -56,7 +56,7 @@ jobs:
         if: fromJSON(steps.current_pr.outputs.result).data.mergeable_state != 'clean'
         run: exit 1
 
-      # To use this repository's private action, you must check out the repository
+      # To use this repository's private action, you must check out the repository 
       - name: Checkout
         uses: actions/checkout@v4
 
