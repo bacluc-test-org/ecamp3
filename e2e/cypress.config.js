@@ -20,6 +20,10 @@ module.exports = defineConfig({
     specPattern: 'specs/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'support/index.js',
     baseUrl: 'http://localhost:3000',
+    retries: {
+      runMode: process.env.E2E_RUNMODE_RETRIES || 0,
+      openMode: 0,
+    }
   },
   env: {
     PRINT_URL: 'http://localhost:3000/print',
