@@ -1,4 +1,5 @@
 {
+    debug
 	{$CADDY_GLOBAL_OPTIONS}
 
 	frankenphp {
