@@ -49,6 +49,10 @@ jobs:
           restore-keys: |
             docker-compose-
 
+      - run: docker compose up --wait -d database
+        
+      - run: docker compose run --rm api composer install --prefer-dist --no-progress --no-interaction
+
       # start necessary containers
       - run: docker compose up -d api frontend pdf print browserless database docker-host http-cache mail
 
@@ -69,6 +73,10 @@ jobs:
           name: cypress-output-${{ matrix.browser }}${{ inputs.run-identifier != null && format('-{0}', inputs.run-identifier) }}
           path: |
             e2e/data/**/*
+
+      # print running containers
+      - run: docker ps -a
+        if: always()
 
       # print docker container logs (good for debugging; can be disabled again later on)
       - run: docker compose logs --tail="all"
