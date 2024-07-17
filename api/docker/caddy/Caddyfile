@@ -1,4 +1,5 @@
 {
+    debug
 	{$CADDY_GLOBAL_OPTIONS}
 
 	frankenphp {
@@ -21,34 +22,6 @@
 }
 
 {$CADDY_EXTRA_CONFIG}
-
-:3000 {
-	log {
-		level DEBUG
-	}
-
-	handle_path /api* {
-		# rewriting the uri used for php-fcgi did not work
-		# so we make a hop more to localhost:3001 with the rewritten url where the fcgi happens
-		# this may slow down the request
-
-		reverse_proxy localhost:3001 {
-			header_up X-Forwarded-Prefix "/api"
-		}
-	}
-
-	handle /print* {
-		reverse_proxy print:3003
-	}
-
-	handle /mail* {
-		reverse_proxy mail:1080
-	}
-
-	handle {
-		reverse_proxy frontend:3000
-	}
-}
 
 :3001 {
 	route {
