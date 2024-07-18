@@ -140,6 +140,12 @@
         "postgres"
       ],
       "allowedVersions": "15-alpine"
+    },
+    {
+      "matchDepNames": [
+        ".*cypress.*"
+      ],
+      "automerge": false
     }
   ],
   "customManagers": [
